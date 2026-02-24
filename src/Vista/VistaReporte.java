@@ -45,6 +45,7 @@ public class VistaReporte extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 85, 97));
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 85, 97));
@@ -155,14 +156,14 @@ public class VistaReporte extends javax.swing.JFrame {
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnVolverActionPerformed
-
-    private void radConActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radConActionPerformed
-        // TODO add your handling code here:
         VistaMenu menu = new VistaMenu(controller);
         menu.setLocationRelativeTo(this);
         menu.setVisible(true);
         this.dispose();
+    }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void radConActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radConActionPerformed
+        // TODO add your handling code here:
     }//GEN-LAST:event_radConActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
