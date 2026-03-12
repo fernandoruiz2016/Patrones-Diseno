@@ -2,32 +2,23 @@ package Controlador;
 
 import Modelo.*;
 import Modelo.Facade.SistemaCorporativoFacade;
+import java.util.Map;
 
 public class SistemaController {
+    private final Map<String, Filial> filiales;
+    private final SistemaCorporativoFacade facade;
 
-    private Filial espana;
-    private Filial latam;
-    private SistemaCorporativoFacade facade;
-
-    public SistemaController() {
-
-        espana = new Filial("España");
-        latam = new Filial("Latam");
-
-        SedeCentral sede = new SedeCentral();
-
-        espana.agregarObservador(sede);
-        latam.agregarObservador(sede);
-
-        facade = new SistemaCorporativoFacade(espana, latam);
+    public SistemaController(Map<String, Filial> filiales, SistemaCorporativoFacade facade) {
+        this.filiales = filiales;
+        this.facade = facade;
     }
 
     public void registrarVenta(String region, double monto) {
-
-        if (region.equalsIgnoreCase("España")) {
-            espana.registrarVenta(monto);
+        Filial f = filiales.get(region.toLowerCase());
+        if (f != null) {
+            f.registrarVenta(monto);
         } else {
-            latam.registrarVenta(monto);
+            throw new IllegalArgumentException("Región no soportada");
         }
     }
 
