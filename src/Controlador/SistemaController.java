@@ -16,10 +16,23 @@ public class SistemaController {
         this.facade = facade;
     }
 
-    public void registrarVenta(String region, double monto) {
+    public void registrarVenta(String region, String nombreProducto, int cantidad, double montoTotal) {
         Filial f = filiales.get(region.toLowerCase());
         if (f != null) {
-            f.registrarVenta(monto);
+            // Buscamos el producto en el inventario de la filial
+            for (Producto p : f.getInventario()) {
+                if (p.getNombre().equalsIgnoreCase(nombreProducto)) {
+                    // Validamos que haya stock suficiente antes de restar
+                    if (p.getStock() >= cantidad) {
+                        p.setStock(p.getStock() - cantidad); // Restamos el stock
+                        f.registrarVenta(montoTotal); // Registramos el monto financiero
+                        return;
+                    } else {
+                        throw new IllegalArgumentException("Stock insuficiente en " + region);
+                    }
+                }
+            }
+            throw new IllegalArgumentException("Producto no encontrado");
         } else {
             throw new IllegalArgumentException("Región no soportada");
         }

@@ -152,12 +152,12 @@ public class VistaVenta extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(cbProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel5)
                         .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4)))
+                        .addComponent(jLabel4))
+                    .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -181,42 +181,48 @@ public class VistaVenta extends javax.swing.JFrame {
             return;
         }
 
+        // 2. Obtención de datos de la interfaz
         int cantidad = (int) spCantidad.getValue();
+
+        // Asegúrate de usar el nombre correcto: jTextField1 (Stock) y jTextField2 (Precio)
+        String stockTxt = txtStock.getText();
+        int stockDisponible = Integer.parseInt(stockTxt.isEmpty() ? "0" : stockTxt);
+
+        // 3. Validaciones de cantidad vs stock
         if (cantidad <= 0) {
             JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a 0.");
             return;
         }
 
-        int cantidadSolicitada = (int) spCantidad.getValue();
-        int stockDisponible = Integer.parseInt(txtStock.getText().isEmpty() ? "0" : txtStock.getText());
-
-        if (cantidadSolicitada > stockDisponible) {
+        if (cantidad > stockDisponible) {
             JOptionPane.showMessageDialog(this, "No hay suficiente stock. Disponible: " + stockDisponible);
             return;
         }
 
-        if (cantidadSolicitada <= 0) {
-            JOptionPane.showMessageDialog(this, "Ingrese una cantidad válida.");
-            return;
-        }
-
+        // 4. Preparación de datos para el controlador
         String regionSeleccionada = cbRegion.getSelectedItem().toString();
-        String regionKey = (regionSeleccionada.equals("España")) ? "españa" : "latam";
+        String regionKey = (regionSeleccionada.equalsIgnoreCase("España")) ? "españa" : "latam";
+        String productoNombre = cbProducto.getSelectedItem().toString();
 
         try {
             double precio = Double.parseDouble(txtPrecio.getText());
-            double montoTotal = precio * cantidadSolicitada;
+            double montoTotal = precio * cantidad;
 
-            controller.registrarVenta(regionKey, montoTotal);
+            // 5. Llamada al controlador con descuento de stock
+            controller.registrarVenta(regionKey, productoNombre, cantidad, montoTotal);
 
-            JOptionPane.showMessageDialog(this, "Venta registrada con éxito.\nTotal: $" + montoTotal);
+            JOptionPane.showMessageDialog(this, "Venta exitosa en " + regionSeleccionada + ".\nStock actualizado.");
 
-            // Limpiar todo y refrescar inventario visual
-            cbRegion.setSelectedIndex(0);
+            // 6. Limpiar y resetear vista
             spCantidad.setValue(0);
+            cbRegion.setSelectedIndex(0); // Esto disparará cbRegionActionPerformed y limpiará el resto
+            txtPrecio.setText("");
+            txtStock.setText("");
 
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error en el formato del precio.");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al registrar: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al procesar la venta: " + e.getMessage());
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
