@@ -8,6 +8,8 @@ public class Filial implements Observable{
     private double ventas;
     private List<Observador> observadores = new ArrayList<>();
     
+    private List<Producto> inventario = new ArrayList<>();
+    
     public Filial(String nombre) {
         this.nombre = nombre;
     }
@@ -17,12 +19,33 @@ public class Filial implements Observable{
         notificarObservadores("Nueva venta en " + nombre + ": " + monto);
     }
     
+    public void agregarProducto(Producto p) {
+        this.inventario.add(p);
+        notificarObservadores("Stock actualizado en " + nombre + ": " + p.getNombre());
+    }
+    
+    public void venderProducto(String nombreProducto, int cantidad) {
+        for (Producto p : inventario) {
+            if (p.getNombre().equalsIgnoreCase(nombreProducto) && p.getStock() >= cantidad) {
+                p.reducirStock(cantidad);
+                double montoVenta = p.getPrecio() * cantidad;
+                registrarVenta(montoVenta);
+                return;
+            }
+        }
+        notificarObservadores("Error: Stock insuficiente de " + nombreProducto + " en " + nombre);
+    }
+    
     public double getVentas() {
         return ventas;
     }
 
     public String getNombre() {
         return nombre;
+    }
+    
+    public List<Producto> getInventario() {
+        return inventario;
     }
 
     @Override
