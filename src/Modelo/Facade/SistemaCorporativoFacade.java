@@ -15,7 +15,7 @@ public class SistemaCorporativoFacade {
     }
     
     public void registrarProducto(String region, String nombre, double precio, int stock) {
-        Producto nuevo = new Producto(nombre, precio, stock, false); // Creamos producto directo
+        Producto nuevo = new Producto(nombre, precio, stock);
         if (region.equalsIgnoreCase("España")) {
             espana.agregarProducto(nuevo);
         } else if (region.equalsIgnoreCase("Latam")) {

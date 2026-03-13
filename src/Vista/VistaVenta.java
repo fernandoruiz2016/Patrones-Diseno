@@ -2,13 +2,11 @@ package Vista;
 
 import Controlador.SistemaController;
 import javax.swing.JOptionPane;
-import javax.swing.ButtonGroup;
 
 public class VistaVenta extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaVenta.class.getName());
     private SistemaController controller;
-    private ButtonGroup grupoRegiones;
 
     /**
      * Creates new form VistaVenta
@@ -17,9 +15,11 @@ public class VistaVenta extends javax.swing.JFrame {
         initComponents();
         this.controller = controller;
 
-        grupoRegiones = new ButtonGroup();
-        grupoRegiones.add(radEs);
-        grupoRegiones.add(radLat);
+        txtStock.setEditable(false); // Stock
+        txtPrecio.setEditable(false); // Precio
+
+        cbProducto.addActionListener(this::cbProductoActionPerformed);
+
     }
 
     /**
@@ -32,13 +32,18 @@ public class VistaVenta extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        radEs = new javax.swing.JRadioButton();
-        txtMonto = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        radLat = new javax.swing.JRadioButton();
         btnRegistrar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
+        cbProducto = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        cbRegion = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        spCantidad = new javax.swing.JSpinner();
+        jLabel4 = new javax.swing.JLabel();
+        txtStock = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtPrecio = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 85, 97));
@@ -48,23 +53,9 @@ public class VistaVenta extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(51, 85, 97));
         jLabel1.setText("Registrar Venta");
 
-        radEs.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        radEs.setForeground(new java.awt.Color(51, 85, 97));
-        radEs.setText("España");
-
-        txtMonto.addActionListener(this::txtMontoActionPerformed);
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 85, 97));
-        jLabel2.setText("Monto ($):");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(51, 85, 97));
-        jLabel3.setText("Región:");
-
-        radLat.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        radLat.setForeground(new java.awt.Color(51, 85, 97));
-        radLat.setText("América Latina");
+        jLabel2.setText("Producto:");
 
         btnRegistrar.setBackground(new java.awt.Color(51, 85, 97));
         btnRegistrar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -78,33 +69,69 @@ public class VistaVenta extends javax.swing.JFrame {
         btnVolver.setText("Volver");
         btnVolver.addActionListener(this::btnVolverActionPerformed);
 
+        cbProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Seleccione un producto]" }));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(51, 85, 97));
+        jLabel7.setText("Región:");
+
+        cbRegion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Seleccione una region]", "España", "América Latina" }));
+        cbRegion.addActionListener(this::cbRegionActionPerformed);
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 85, 97));
+        jLabel3.setText("Cantidad:");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(51, 85, 97));
+        jLabel4.setText("Stock:");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(51, 85, 97));
+        jLabel5.setText("Precio ($):");
+
+        txtPrecio.addActionListener(this::txtPrecioActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(radEs, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(radLat, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(92, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(161, 161, 161))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(141, 141, 141))
+                        .addGap(17, 17, 17)
+                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(94, 94, 94))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbProducto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbRegion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(130, 130, 130)
+                                .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(spCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addGap(47, 47, 47))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,67 +143,92 @@ public class VistaVenta extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(btnVolver)))
-                .addGap(36, 36, 36)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(cbRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                    .addComponent(cbProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(radEs)
-                    .addComponent(radLat))
-                .addGap(33, 33, 33)
+                    .addComponent(spCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
                 .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMontoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMontoActionPerformed
-
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
-        String montoTexto = txtMonto.getText().trim();
-
-        if (montoTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ingrese un monto.");
-            return;
-        }
-
-        double monto;
-
-        try {
-            monto = Double.parseDouble(montoTexto);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Monto inválido.");
-            return;
-        }
-
-        String region = "";
-
-        if (radEs.isSelected()) {
-            region = "España";
-        } else if (radLat.isSelected()) {
-            region = "Latam";
-        } else {
+        if (cbRegion.getSelectedIndex() <= 0) {
             JOptionPane.showMessageDialog(this, "Seleccione una región.");
             return;
         }
+        if (cbProducto.getSelectedIndex() <= 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione un producto.");
+            return;
+        }
 
-        // Llamar al controller
-        controller.registrarVenta(region, monto);
+        int cantidad = (int) spCantidad.getValue();
+        if (cantidad <= 0) {
+            JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a 0.");
+            return;
+        }
 
-        JOptionPane.showMessageDialog(this,
-                "Venta registrada en " + region
-                + " por monto ($): " + monto);
+        int cantidadSolicitada = (int) spCantidad.getValue();
+        int stockDisponible = Integer.parseInt(txtStock.getText().isEmpty() ? "0" : txtStock.getText());
 
-        // Limpiar campos
-        txtMonto.setText("");
-        grupoRegiones.clearSelection();
+        if (cantidadSolicitada > stockDisponible) {
+            JOptionPane.showMessageDialog(this, "No hay suficiente stock. Disponible: " + stockDisponible);
+            return;
+        }
+
+        if (cantidadSolicitada <= 0) {
+            JOptionPane.showMessageDialog(this, "Ingrese una cantidad válida.");
+            return;
+        }
+
+        String regionSeleccionada = cbRegion.getSelectedItem().toString();
+        String regionKey = (regionSeleccionada.equals("España")) ? "españa" : "latam";
+
+        try {
+            double precio = Double.parseDouble(txtPrecio.getText());
+            double montoTotal = precio * cantidadSolicitada;
+
+            controller.registrarVenta(regionKey, montoTotal);
+
+            JOptionPane.showMessageDialog(this, "Venta registrada con éxito.\nTotal: $" + montoTotal);
+
+            // Limpiar todo y refrescar inventario visual
+            cbRegion.setSelectedIndex(0);
+            spCantidad.setValue(0);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al registrar: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private double obtenerPrecioProducto(String region, String nombre) {
+        Object[][] datos = controller.obtenerMatrizInventario(region);
+        for (Object[] fila : datos) {
+            if (fila[1].toString().equals(nombre)) {
+                return (double) fila[2];
+            }
+        }
+        return 0;
+    }
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
@@ -186,14 +238,68 @@ public class VistaVenta extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private void cbRegionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbRegionActionPerformed
+        // TODO add your handling code here:
+        String regionSeleccionada = cbRegion.getSelectedItem().toString();
+
+        // 1. Limpiar el combo de productos
+        cbProducto.removeAllItems();
+        cbProducto.addItem("[Seleccione un producto]");
+
+        // 2. Si no es la opción por defecto, buscar productos
+        if (cbRegion.getSelectedIndex() > 0) {
+            String regionKey = (regionSeleccionada.equals("España")) ? "españa" : "latam";
+
+            // Obtenemos la matriz (que ya ajustamos a 4 columnas: Filial, Nombre, Precio, Stock)
+            Object[][] datos = controller.obtenerMatrizInventario(regionKey);
+
+            for (Object[] fila : datos) {
+                cbProducto.addItem(fila[1].toString());
+            }
+        }
+    }//GEN-LAST:event_cbRegionActionPerformed
+
+    private void cbProductoActionPerformed(java.awt.event.ActionEvent evt) {
+        // Si no hay producto seleccionado, limpiamos los campos
+        if (cbProducto.getSelectedIndex() <= 0) {
+            txtStock.setText("");
+            txtPrecio.setText("");
+            return;
+        }
+
+        String regionSeleccionada = cbRegion.getSelectedItem().toString();
+        String regionKey = (regionSeleccionada.equals("España")) ? "españa" : "latam";
+        String productoNombre = cbProducto.getSelectedItem().toString();
+
+        // Buscamos los datos en el controlador
+        Object[][] datos = controller.obtenerMatrizInventario(regionKey);
+        for (Object[] fila : datos) {
+            if (fila[1].toString().equals(productoNombre)) {
+                // fila[2] es Precio, fila[3] es Stock (según nuestro controlador de 4 columnas)
+                txtPrecio.setText(fila[2].toString());
+                txtStock.setText(fila[3].toString());
+                break;
+            }
+        }
+    }
+
+    private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecioActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JComboBox<String> cbProducto;
+    private javax.swing.JComboBox<String> cbRegion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JRadioButton radEs;
-    private javax.swing.JRadioButton radLat;
-    private javax.swing.JTextField txtMonto;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JSpinner spCantidad;
+    private javax.swing.JTextField txtPrecio;
+    private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
 }
