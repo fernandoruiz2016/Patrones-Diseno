@@ -1,5 +1,9 @@
 package Modelo.Factory;
 
+import Modelo.ReporteEspana;
+import Modelo.ReporteConsolidado;
+import Modelo.ReporteLatam;
+import Modelo.Reporte;
 import Modelo.Filial;
 import java.util.HashMap;
 import java.util.Map;

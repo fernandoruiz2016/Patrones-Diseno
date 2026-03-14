@@ -42,8 +42,8 @@ public class SistemaController {
         facade.registrarProducto(region, nombre, precio, stock);
     }
 
-    public String verInventario() {
-        return facade.generarReporteInventario();
+    public String verInventario(String tipo) {
+        return facade.generarReporteInventario(tipo);
     }
 
     public String generarReporte(String tipo) {

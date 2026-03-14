@@ -23,6 +23,9 @@ public class VistaReporte extends javax.swing.JFrame {
         grupoRegiones.add(radCon);
         grupoRegiones.add(radEs);
         grupoRegiones.add(radLat);
+
+        txtAreaReporte.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12));
+        txtAreaReporte.setEditable(false);
     }
 
     /**
@@ -34,14 +37,30 @@ public class VistaReporte extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         radCon = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         radLat = new javax.swing.JRadioButton();
         btnBuscar = new javax.swing.JButton();
-        txtReporte = new javax.swing.JTextField();
         btnVolver = new javax.swing.JButton();
         radEs = new javax.swing.JRadioButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtAreaReporte = new javax.swing.JTextArea();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 85, 97));
@@ -70,8 +89,6 @@ public class VistaReporte extends javax.swing.JFrame {
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
-        txtReporte.setText("Reporte....");
-
         btnVolver.setBackground(new java.awt.Color(204, 0, 51));
         btnVolver.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnVolver.setForeground(new java.awt.Color(255, 255, 255));
@@ -82,6 +99,10 @@ public class VistaReporte extends javax.swing.JFrame {
         radEs.setForeground(new java.awt.Color(51, 85, 97));
         radEs.setText("España");
 
+        txtAreaReporte.setColumns(20);
+        txtAreaReporte.setRows(5);
+        jScrollPane1.setViewportView(txtAreaReporte);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,23 +110,23 @@ public class VistaReporte extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(68, 68, 68)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(164, 164, 164)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(txtReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(59, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(68, 68, 68)
+                                .addComponent(jLabel1)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radCon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(radEs, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radLat, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -130,8 +151,8 @@ public class VistaReporte extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txtReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -139,7 +160,7 @@ public class VistaReporte extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        String tipo = "";
+        String tipo;
         if (radCon.isSelected()) {
             tipo = "Consolidado";
         } else if (radEs.isSelected()) {
@@ -147,11 +168,24 @@ public class VistaReporte extends javax.swing.JFrame {
         } else if (radLat.isSelected()) {
             tipo = "Latam";
         } else {
-            JOptionPane.showMessageDialog(this, "Seleccione una opción.");
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una región.");
             return;
         }
-        String resultado = controller.generarReporte(tipo);
-        txtReporte.setText(resultado);
+
+        String cuerpoReporte = controller.verInventario(tipo);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("======================================================================\n");
+        sb.append("                 REPORTE SISTEMA CORPORATIVO - ").append(tipo.toUpperCase()).append("\n");
+        sb.append("======================================================================\n\n");
+
+        sb.append(cuerpoReporte);
+
+        sb.append("\n\n**********************************************************************");
+        sb.append("\nGenerado por el sistema el: ").append(new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date()));
+        sb.append("\n**********************************************************************");
+
+        txtAreaReporte.setText(sb.toString());
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -171,9 +205,12 @@ public class VistaReporte extends javax.swing.JFrame {
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JRadioButton radCon;
     private javax.swing.JRadioButton radEs;
     private javax.swing.JRadioButton radLat;
-    private javax.swing.JTextField txtReporte;
+    private javax.swing.JTextArea txtAreaReporte;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,5 +1,6 @@
-package Modelo.Factory;
+package Modelo;
 
+import Modelo.Reporte;
 import Modelo.Filial;
 
 public class ReporteConsolidado implements Reporte{
